@@ -3,6 +3,7 @@ var alturaDaTela = innerHeight;
 
 function setup() {
     createCanvas(larguraDaTela, alturaDaTela);
+    somDaTrilha.loop();
 }
 function draw() {
     background(imagemDaEstrada);
