@@ -1,5 +1,5 @@
 //código do ator
-var velocidadeXYDoAtor = 3;
+var velocidadeXYDoAtor = 5;
 var yAtor = 660;
 var xAtor = larguraDaTela/2;
 var colisao = false;
@@ -14,34 +14,45 @@ function movimentaAtor() {
         yAtor -= velocidadeXYDoAtor;
       }
     if (keyIsDown(DOWN_ARROW)) {
+        if(podeSeMoverY()) {
         yAtor += velocidadeXYDoAtor;
+        }
     }
     if (keyIsDown(RIGHT_ARROW)) {
+        if(podeSeMoverX1()) {
         xAtor += velocidadeXYDoAtor;
+        }
     }
     if (keyIsDown(LEFT_ARROW)) {
+        if(podeSeMoverX2()) {
         xAtor -= velocidadeXYDoAtor;
-    }
-    //Impede que o ator saia para baixo da tela
-    if (yAtor >= 672) {
-        yAtor -= velocidadeXYDoAtor;
+        }
     }
 }
 function verificaColisao() {
     for (let i = 0; i < imagemCarros.length; i++){
         colisao = collideRectCircle(xCarros[i], yCarros[i], comprimentoCarro, alturaCarro, xAtor, yAtor, 20);
         if (colisao){
-        mortes++; voltaAtorParaPosicaoInicial();
+        mortes++; voltaAtorParaPosicaoInicial(); somColidiu.play();
         }
     }
 }
-function voltaAtorParaPosicaoInicial() {
+function voltaAtorParaPosicaoInicial(y, x) {
     yAtor = 660;
     xAtor = larguraDaTela/2;
     }
+function podeSeMoverY() {
+    return yAtor <= 664;
+}
+function podeSeMoverX1() {
+    return xAtor <= larguraDaTela - 50;
+}
+function podeSeMoverX2() {
+    return xAtor >= 0;
+}
 function incluiPontos() {
     if (yAtor <= -30) {
-        xAtor, yAtor = larguraDaTela/2, 660; meusPontos ++;
+        xAtor, yAtor = larguraDaTela/2, voltaAtorParaPosicaoInicial(); meusPontos ++; somPonto.play();
     }
     stroke(255);
     textAlign(CENTER);
